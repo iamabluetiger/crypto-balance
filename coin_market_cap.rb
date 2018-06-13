@@ -3,12 +3,11 @@ require 'net/http'
 
 class CoinMarketCap
   CMC_LIST = JSON(Net::HTTP.get_response(URI('https://api.coinmarketcap.com/v2/listings/')).body)["data"]
-  attr_reader :symbol, :id, :price, :currency
+  attr_reader :symbol, :currency, :id, :price
 
   def initialize(symbol, currency)
     @symbol = symbol
     @currency = currency
-
     @id = get_id
     @price = get_price
   end

@@ -1,31 +1,33 @@
 require_relative 'coin_market_cap'
 
-class CryptoCurrencyBalance
-  attr_reader :symbol, :amount, :currency, :id
-  @@balance = 0
+class CryptoCurrencyBalance < CoinMarketCap
+  attr_reader :amount, :currency_amount
+  @@balance = {}
 
   def initialize(symbol, amount, currency="KRW")
-    @symbol = symbol
+    super(symbol, currency)
     @amount = amount.to_f
-    @currency = currency
-    @cmc = CoinMarketCap.new(symbol, currency)
-  end
-
-  def calculate
-    (amount * @cmc.price).round(2)
-  end
-
-  def sum_balance
-    @@balance += calculate
+    @currency_amount = get_currency_amount
+    @@balance[id.to_s] = currency_amount
   end
 
   def print
-    return nil if calculate == 0
-    puts "#{symbol}: #{calculate} #{currency}"
+    return nil if currency_amount == 0
+    puts "#{symbol}: #{currency_amount} #{currency}"
+  end
+
+  def self.sum_balance
+    @@balance.map { |k, v| v.to_f }.sum.round(2)
   end
 
   def self.print_sum(currency)
-    puts "#{currency}: #{@@balance.round(2)} #{currency}"
+    puts "#{currency}: #{sum_balance} #{currency}"
+  end
+
+  private 
+
+  def get_currency_amount
+    @currency_amount ||= (amount * price).round(2)
   end
 
 end

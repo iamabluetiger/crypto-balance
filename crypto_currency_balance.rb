@@ -1,14 +1,17 @@
 require_relative 'coin_market_cap'
 
-class CryptoCurrencyBalance < CoinMarketCap
-  attr_reader :amount, :currency_amount
+class CryptoCurrencyBalance
+  include CoinMarketCap
+  attr_reader :symbol, :currency, :price, :amount, :currency_amount
   @@balance = {}
 
   def initialize(symbol, amount, currency="KRW")
-    super(symbol, currency)
+    @symbol = symbol
     @amount = amount.to_f
+    @currency = currency
+
     @currency_amount = get_currency_amount
-    @@balance[id.to_s] = currency_amount
+    @@balance[symbol] = currency_amount
   end
 
   def print
@@ -27,7 +30,7 @@ class CryptoCurrencyBalance < CoinMarketCap
   private 
 
   def get_currency_amount
-    @currency_amount ||= (amount * price).round(2)
+    @currency_amount ||= (amount * get_price).round(2)
   end
 
 end

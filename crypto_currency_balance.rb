@@ -20,7 +20,7 @@ class CryptoCurrencyBalance
   end
 
   def self.sum_balance
-    @@balance.map { |k, v| v.to_f }.sum.round(2)
+    @@balance.inject(0) { |sum, arr| sum + arr[1] }.round(2)
   end
 
   def self.print_sum(currency)

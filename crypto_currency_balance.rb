@@ -10,7 +10,6 @@ class CryptoCurrencyBalance
     @amount = amount.to_f
     @currency = currency
 
-    @currency_amount = get_currency_amount
     @@balance[symbol] = currency_amount
   end
 
@@ -19,19 +18,25 @@ class CryptoCurrencyBalance
     puts "#{symbol}: #{currency_amount} #{currency}"
   end
 
-  def self.sum_balance
-    @@balance.inject(0) { |sum, arr| sum + arr[1] }.round(2)
-  end
+  private
 
-  def self.print_sum(currency)
-    puts "#{currency}: #{sum_balance} #{currency}"
-  end
-
-  private 
-
-  def get_currency_amount
+  def currency_amount
     @currency_amount ||= (amount * get_price).round(2)
   end
 
+end
+
+class CryptoCurrencyBalance
+  class << self
+    def print_sum(currency)
+      puts "#{currency}: #{sum_balance} #{currency}"
+    end
+
+    private 
+
+    def sum_balance
+      @@balance.inject(0) { |sum, arr| sum + arr[1] }.round(2)
+    end
+  end
 end
 

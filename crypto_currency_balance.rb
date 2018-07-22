@@ -4,7 +4,7 @@ class CryptoCurrencyBalance
   include CoinMarketCap
   @@balance = {}
 
-  def initialize(symbol, amount, currency="KRW")
+  def initialize(symbol:, amount:, currency: "KRW")
     @symbol = symbol
     @amount = amount.to_f
     @currency = currency
@@ -33,7 +33,7 @@ end
 
 class CryptoCurrencyBalance
   class << self
-    def print_sum(currency)
+    def print_sum(currency: "KRW")
       puts "#{currency}: #{sum_balance} #{currency}"
     end
 

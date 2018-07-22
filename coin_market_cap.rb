@@ -10,6 +10,7 @@ module CoinMarketCap
   end
 
   def get_price
+    return 1 if symbol == "KRW"
     return 0 unless get_id
     @_price ||= get_ticker_data['quotes'][currency]['price']
   end

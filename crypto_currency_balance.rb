@@ -2,21 +2,26 @@ require_relative 'coin_market_cap'
 
 class CryptoCurrencyBalance
   include CoinMarketCap
-  attr_reader :symbol, :currency, :price, :amount, :currency_amount
   @@balance = {}
 
   def initialize(symbol, amount, currency="KRW")
     @symbol = symbol
     @amount = amount.to_f
     @currency = currency
-
-    @@balance[symbol] = currency_amount
   end
 
   def print
     return nil if currency_amount == 0
     puts "#{symbol}: #{currency_amount} #{currency}"
   end
+
+  def set_class_balance
+    @@balance[symbol] ||= currency_amount
+  end
+
+  protected
+
+  attr_reader :symbol, :amount, :currency
 
   private
 

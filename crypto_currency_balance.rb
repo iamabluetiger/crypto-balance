@@ -1,7 +1,7 @@
-require_relative 'coin_market_cap'
+require_relative 'crypto_currency_list'
 
 class CryptoCurrencyBalance
-  include CoinMarketCap
+  include CryptoCurrencyList
   @@balance = {}
 
   def initialize(symbol:, amount:, currency: "KRW")
@@ -11,7 +11,7 @@ class CryptoCurrencyBalance
   end
 
   def print
-    return nil if currency_amount == 0
+    return nil if block_print
     puts "#{symbol}: #{currency_amount} #{currency}"
   end
 
@@ -24,6 +24,15 @@ class CryptoCurrencyBalance
   attr_reader :symbol, :amount, :currency
 
   private
+
+  def block_print
+    return true if currency_amount == 0
+    block_amount = 
+      case currency
+      when "KRW" then 1000000
+      end
+    currency_amount <= block_amount
+  end
 
   def currency_amount
     @currency_amount ||= (amount * get_price).round(2)

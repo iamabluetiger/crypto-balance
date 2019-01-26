@@ -8,6 +8,6 @@ CRYPTO_AMOUNT_LIST.map do |bl|
   })
 
   a.set_class_balance
-  a.print
+  puts a.print if !a.print.nil?
 end
-CryptoCurrencyBalance.print_sum
+puts CryptoCurrencyBalance.print_sum

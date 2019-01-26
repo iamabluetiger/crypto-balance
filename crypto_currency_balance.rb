@@ -12,7 +12,7 @@ class CryptoCurrencyBalance
 
   def print
     return nil if block_print
-    puts "#{symbol}: #{currency_amount} #{currency}"
+    "#{symbol}: #{currency_amount} #{currency}"
   end
 
   def set_class_balance
@@ -43,7 +43,7 @@ end
 class CryptoCurrencyBalance
   class << self
     def print_sum(currency: "KRW")
-      puts "#{currency}: #{sum_balance} #{currency}"
+      "#{currency}: #{sum_balance} #{currency}"
     end
 
     private 

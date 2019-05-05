@@ -11,11 +11,12 @@ class CryptoCurrencyBalance
   end
 
   def print
-    return nil if block_print
+    return if blocked?
     "#{symbol}: #{currency_amount} #{currency}"
   end
 
   def set_class_balance
+    return if blocked?
     @@balance[symbol] ||= currency_amount
   end
 
@@ -25,7 +26,7 @@ class CryptoCurrencyBalance
 
   private
 
-  def block_print
+  def blocked?
     return true if currency_amount == 0
     block_amount = 
       case currency

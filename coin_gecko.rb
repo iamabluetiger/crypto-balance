@@ -2,7 +2,8 @@ require 'json'
 require 'net/http'
 
 class CoinGecko
-  CG_LIST = JSON(Net::HTTP.get_response(URI('https://api.coingecko.com/api/v3/coins/list')).body)
+  # CG_LIST = JSON(Net::HTTP.get_response(URI('https://api.coingecko.com/api/v3/coins/list')).body)
+  CG_LIST = JSON(File.read("coin_list_coin_gecko.json"))
 
   def initialize(symbol:, currency: "KRW")
     @symbol = symbol.downcase
@@ -11,6 +12,7 @@ class CoinGecko
 
   def get_price
     return 0 unless get_id
+    return 0 if symbol == "ht" # ht have problem on congecko
     request_price
   end
 

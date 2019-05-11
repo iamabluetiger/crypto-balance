@@ -30,7 +30,7 @@ class CryptoCurrencyBalance
     return true if currency_amount == 0
     block_amount = 
       case currency
-      when "KRW" then 1000000
+      when "KRW" then 2000000
       end
     currency_amount <= block_amount
   end

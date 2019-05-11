@@ -12,7 +12,6 @@ class CoinGecko
 
   def get_price
     return 0 unless get_id
-    return 0 if symbol == "ht" # ht have problem on congecko
     request_price
   end
 
@@ -21,13 +20,14 @@ class CoinGecko
   attr_reader :symbol, :currency
 
   def get_id
+    return 'huobi-token' if symbol == 'ht'
     data = -> { CG_LIST.find { |list| list["symbol"] == symbol } || {} }
     data.call()["id"]
   end
 
   def request_price
     data = JSON(Net::HTTP.get_response(URI("https://api.coingecko.com/api/v3/simple/price?ids=#{get_id}&vs_currencies=#{currency}")).body)
-    data[get_id][currency]
+    data.to_hash.dig(get_id, currency)
   end
 
 end

@@ -6,6 +6,6 @@ module CryptoCurrencyList
     return 1 if symbol == "KRW"
     list = [CoinGecko.new(symbol: symbol, currency: currency),
             CoinMarketCap.new(symbol: symbol, currency: currency)]
-    list.map { |c| c.get_price }.reject { |p| p == 0 }.min.to_f
+    list.map { |c| c.get_price.to_f }.reject { |p| p == 0 }.min.to_f
   end
 end

@@ -12,7 +12,7 @@ class CoinMarketCap
 
   def get_price
     return 0 unless get_id
-    get_ticker_data['quote'][currency]['price']
+    get_ticker_data.dig('quote', currency, 'price').to_f
   end
 
   private
@@ -20,6 +20,8 @@ class CoinMarketCap
   attr_reader :symbol, :currency
 
   def get_id
+    return nil if symbol == 'LUNA'
+    return 3794 if symbol == 'ATOM'
     data = -> { CMC_LIST.find { |list| list["symbol"] == symbol } || {} }
     data.call()["id"]
   end
@@ -36,7 +38,7 @@ class CoinMarketCap
     request = Net::HTTP::Get.new(uri.request_uri)
     request['Accept'] = 'application/json'
     request['X-CMC_PRO_API_KEY'] = '40efb91c-ec27-48b6-849e-b7deb5ca596d'
-    response = JSON(http.request(request).body)['data'][get_id.to_s]
+    response = JSON(http.request(request).body).dig('data', get_id.to_s)
   end
 
 end
